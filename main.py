@@ -2,6 +2,7 @@ import random
 
 import cv2
 import cvzone
+import mediapipe
 from cvzone.HandTrackingModule import HandDetector
 import time
 #import random
@@ -64,12 +65,15 @@ while True:
                     playerMove = 2
                 if fingers == [0, 1, 1, 0, 0]:
                     playerMove = 3
+
                 """elif fingers == [] :
                      startGame = True """
 
                 randomNumber = random.randint(1, 3)
                 imgAI = cv2.imread(f'Resources/{randomNumber}.png', cv2.IMREAD_UNCHANGED)
                 imgBG = cvzone.overlayPNG(imgBG, imgAI, (149, 310))
+
+
 
                 # player gewinnt
 
@@ -107,10 +111,11 @@ while True:
 
         initialTime = time.time()
         stateResult = False
-
+#um das programm zu schließen
     if cv2.waitKey(1) == 27:
-     break
-        #cap.CloseAllWindows()
+        break
+cv2.destroyAllWindows()
+cap.release()
 
 
 
