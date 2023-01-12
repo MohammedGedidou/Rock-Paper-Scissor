@@ -2,7 +2,6 @@ import random
 
 import cv2
 import cvzone
-import mediapipe
 from cvzone.HandTrackingModule import HandDetector
 import time
 #import random
@@ -39,13 +38,15 @@ scores =  [0,0]
 while True:
     imgBG = cv2.imread("Resources/BG.png")
     success, img = cap.read()
+    
 
     # hintergrund scalieren
     imgScaled = cv2.resize(img, (0, 0), None, 0.875, 0.875)
-    imgScaled = imgScaled[:, 80:480]
+    imgScaled = cv2.flip(imgScaled[:, 80:480],1)
 
     # Handfinden
     hands, img = detector.findHands(imgScaled)
+    
 
     if startGame and stateResult is False:
 
@@ -57,14 +58,24 @@ while True:
             timer = 0
 
             if hands:
+                '''if hands[0]['type'] == 'Right':
+                    hand = hands[0]
+                elif len(hands) > 1 and hands[1]['type'] == 'Right':
+                    hand = hands[1]
+                else:
+                    stateResult = False
+                    continue
+                    hand = hands[0]'''
                 hand = hands[0]
                 fingers = detector.fingersUp(hand)
                 if fingers == [0, 0, 0, 0, 0]:
                     playerMove = 1
-                if fingers == [1, 1, 1, 1, 1]:
+                elif fingers == [1, 1, 1, 1, 1]:
                     playerMove = 2
-                if fingers == [0, 1, 1, 0, 0]:
+                elif fingers == [0, 1, 1, 0, 0]:
                     playerMove = 3
+                else:
+                    playerMove = 0
 
                 """elif fingers == [] :
                      startGame = True """
@@ -106,19 +117,15 @@ while True:
     #key = cv2.waitKey(1):
     #    closeGame = True
 
-    if cv2.waitKey(1) == 32:
+    key = cv2.waitKey(50)
+    if key & 0xFF == 32: # start Programm with space
         startGame = True
 
         initialTime = time.time()
         stateResult = False
 #um das programm zu schließen
-    if cv2.waitKey(1) == 27:
+    elif key & 0xFF == 27:
         break
-cv2.destroyAllWindows()
-cap.release()
-
-
-
 
 
 
