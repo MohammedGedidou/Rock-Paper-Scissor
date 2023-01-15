@@ -76,9 +76,8 @@ while True:
                     playerMove = 3
                 else:
                     playerMove = 0
-
-                """elif fingers == [] :
-                     startGame = True """
+                
+                  
 
                 randomNumber = random.randint(1, 3)
                 imgAI = cv2.imread(f'Resources/{randomNumber}.png', cv2.IMREAD_UNCHANGED)
@@ -108,14 +107,22 @@ while True:
     if stateResult:
         imgBG = cvzone.overlayPNG(imgBG, imgAI, (149, 310))
 
+         # zeige spieler handzeichen
+        if playerMove == 1:
+            cv2.putText(imgBG, "Stein", (860, 310), cv2.FONT_HERSHEY_PLAIN, 6, (0, 0, 0), 6)
+        elif playerMove == 2:
+            cv2.putText(imgBG, "Papier", (860, 310), cv2.FONT_HERSHEY_PLAIN, 6, (0, 0, 0), 6)
+        elif playerMove == 3:
+            cv2.putText(imgBG, "Schere", (860, 310), cv2.FONT_HERSHEY_PLAIN, 6, (0, 0, 0), 6)
+
     cv2.putText(imgBG, str(scores[0]), (410, 215), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
     cv2.putText(imgBG, str(scores[1]), (1112, 215), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 6)
     # cv2.imshow("Image", img)
     cv2.imshow("BG", imgBG)
-    # cv2.imshow("Scaled",imgScaled)
+    
 
-    #key = cv2.waitKey(1):
-    #    closeGame = True
+    
+    
 
     key = cv2.waitKey(50)
     if key & 0xFF == 32: # start Programm with space
