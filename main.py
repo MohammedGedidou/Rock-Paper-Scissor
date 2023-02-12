@@ -18,7 +18,7 @@ cv2V.ideoCapture(0) for the web cam in the Laptop
 and cv2.VideoCapture(1) for the extern webcam"""
 
 
-Capture = cv2.VideoCapture(1)
+Capture = cv2.VideoCapture(0)
 Capture.set(3, 640)
 Capture.set(4, 480)
 
